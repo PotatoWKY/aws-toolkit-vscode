@@ -114,19 +114,19 @@ export class DataZoneCustomClientHelper {
                     }
                 }
 
+                // Use user setting for endpoint if provided, otherwise use default api.aws endpoint
+                // Note: The SDK v3 ruleset incorrectly uses amazonaws.com suffix, but DataZone uses api.aws
+                const devSettings = DevSettings.instance
+                const customEndpoint = devSettings.get('endpoints', {})['datazone']
+                const endpoint = customEndpoint || `https://datazone.${this.region}.api.aws`
+                this.logger.info(
+                    `DataZoneCustomClientHelper: Using DataZone endpoint: ${endpoint}${customEndpoint ? ' (custom)' : ' (default)'}`
+                )
+
                 const clientConfig: any = {
                     region: this.region,
                     credentials: awsCredentialProvider,
-                }
-
-                // Use user setting for endpoint if provided
-                const devSettings = DevSettings.instance
-                const customEndpoint = devSettings.get('endpoints', {})['datazone']
-                if (customEndpoint) {
-                    clientConfig.endpoint = customEndpoint
-                    this.logger.debug(
-                        `DataZoneCustomClientHelper: Using custom DataZone endpoint from settings: ${customEndpoint}`
-                    )
+                    endpoint: endpoint,
                 }
 
                 this.datazoneCustomClient = new DataZone(clientConfig)
