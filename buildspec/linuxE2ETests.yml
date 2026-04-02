@@ -5,6 +5,7 @@ run-as: codebuild-user
 
 env:
     variables:
+        VSCODE_TEST_VERSION: '1.83.0'
         AWS_TOOLKIT_TEST_NO_COLOR: '1'
         # Suppress noisy apt-get/dpkg warnings like "debconf: unable to initialize frontend: Dialog").
         DEBIAN_FRONTEND: 'noninteractive'

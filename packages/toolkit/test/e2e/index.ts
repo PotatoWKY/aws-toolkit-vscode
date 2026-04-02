@@ -8,7 +8,7 @@ import { VSCODE_EXTENSION_ID } from 'aws-core-vscode/utils'
 
 export function run(): Promise<void> {
     return runTests(
-        process.env.TEST_DIR ?? ['test/e2e', '../../core/dist/src/testE2E'],
+        process.env.TEST_DIR ?? ['test/e2e', '../../core/dist/src/testE2E/sagemakerunifiedstudio'],
         VSCODE_EXTENSION_ID.awstoolkit,
         ['../../core/dist/src/testInteg/globalSetup.test.ts']
     )
